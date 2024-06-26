@@ -3,25 +3,44 @@ import { Button, TextField } from "@mui/material";
 import "../styles.css";
 import { Link } from "react-router-dom";
 
-const Register = () => {
+const UpdateUser = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
+  const [accessToken, setAccessToken] = useState("");
+  const [userId, setUserId ] = useState("");
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    console.log(storedUser);
+    // console.log(storedUser.id);
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        setAccessToken(user.token);
+        setUserId(user.id)
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+      }
+    }
+  }, []);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const response = await fetch(
-        "http://profiletasks.sandbox.co.ke:8989/register",
+        "http://profiletasks.sandbox.co.ke:8989/user/update",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
+            id: userId,
             firstName: firstname,
             lastName: lastname,
             email: email,
@@ -33,10 +52,12 @@ const Register = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Registration successful:", data);
+        console.log("User updated successful:", data);
         // Handle successful registration, e.g., redirect to login page
+        // Store the user data in session storage
+        sessionStorage.setItem("user", JSON.stringify(data));
       } else {
-        console.error("Registration failed:", response.status);
+        console.error("User updating failed:", response.status);
         // Handle registration failure, e.g., display an error message
       }
     } catch (error) {
@@ -49,7 +70,7 @@ const Register = () => {
       <form className="authForm" onSubmit={handleSubmit}>
         <div>
           <h1 style={{ color: "#3B71CA" }}>
-            React, Spring Boot, MongoDb Ecommerce
+            Update Current User
           </h1>
         </div>
         <div>
@@ -109,7 +130,7 @@ const Register = () => {
             variant="contained"
             color="primary"
           >
-            Register
+            UpdateUser
           </Button>
         </div>
         <div>
@@ -125,4 +146,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default UpdateUser;

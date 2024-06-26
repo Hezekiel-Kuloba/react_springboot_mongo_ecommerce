@@ -3,23 +3,37 @@ import { Button, TextField } from "@mui/material";
 import "../styles.css";
 import { Link } from "react-router-dom";
 
-const Register = () => {
+const CreateNewUser = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
+  const [accessToken, setAccessToken] = useState("");
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        setAccessToken(user.token);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+      }
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(accessToken);
     try {
       const response = await fetch(
-        "http://profiletasks.sandbox.co.ke:8989/register",
+        "http://profiletasks.sandbox.co.ke:8989/user/create",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
             firstName: firstname,
@@ -33,10 +47,12 @@ const Register = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Registration successful:", data);
+        console.log("User created successful:", data);
         // Handle successful registration, e.g., redirect to login page
+        // Store the user data in session storage
+        sessionStorage.setItem("user", JSON.stringify(data));
       } else {
-        console.error("Registration failed:", response.status);
+        console.error("User creation failed:", response.status);
         // Handle registration failure, e.g., display an error message
       }
     } catch (error) {
@@ -109,7 +125,7 @@ const Register = () => {
             variant="contained"
             color="primary"
           >
-            Register
+            CreateNewUser
           </Button>
         </div>
         <div>
@@ -125,4 +141,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default CreateNewUser;
