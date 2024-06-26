@@ -46,6 +46,7 @@ const CreateNewTask = () => {
 
       if (response.ok) {
         const data = await response.json();
+        window.location.reload();
         console.log("Task created successful:", data);
       } else {
         console.error("Task creation failed:", response.status);
@@ -59,47 +60,50 @@ const CreateNewTask = () => {
   return (
     <div>
       <form className="authForm" onSubmit={handleSubmit}>
-        <div>
-          <h1 style={{ color: "#3B71CA" }}>
-            React, Spring Boot, MongoDb Ecommerce
-          </h1>
+      <div>
+          <h2 style={{ color: "#3B71CA" }}>Create New Task</h2>
         </div>
-        <div>
-          <TextField
-            style={{ marginBottom: 20 }}
-            className="auth_text_field"
-            type="text"
-            label="title"  
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-          <TextField
-            label="Task task"
-            multiline
-            rows={4}
-            value={content}
-            variant="outlined"
-            style={{ width: "100%", marginBottom: "16px" }}
-            onChange={(event) => setContent(event.target.value)}
-          />
-        </div>
-        <div>
-          <Button
-            className="authButton"
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Create
-          </Button>
-        </div>
-        <div>
-          <h3>0r</h3>
-        </div>
-        <div>
-          <Button className="authButton" variant="contained" color="primary">
-            <Link to="/sign_in">Login</Link>
-          </Button>
+        
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "space-between",
+          }}
+        >
+          <div>
+            <TextField
+              label="Task Content"
+              multiline
+              rows={6}
+              value={content}
+              variant="outlined"
+              style={{ width: "700px", marginBottom: "16px" }}
+              onChange={(event) => setContent(event.target.value)}
+            />
+          </div>
+          <div style={{ marginLeft: "16px" }}>
+            <div>
+              <TextField
+                style={{ marginBottom: 60 }}
+                className="auth_text_field"
+                type="text"
+                label="Task title"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+              />
+            </div>
+            <div>
+              <Button
+                className="authButton"
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Create
+              </Button>
+            </div>
+          </div>
         </div>
       </form>
     </div>

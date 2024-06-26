@@ -3,14 +3,12 @@ import { Button, TextField } from "@mui/material";
 import "../styles.css";
 import { Link, useParams } from "react-router-dom";
 
-
 const UpdateBlog = () => {
-    const { id } = useParams();
-    const [blog, setBlog] = useState(null);
+  const { id } = useParams();
+  const [blog, setBlog] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [accessToken, setAccessToken] = useState("");
-
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -80,6 +78,7 @@ const UpdateBlog = () => {
         console.log("Blog updated successful:", data);
         // Handle successful registration, e.g., redirect to login page
         // Store the user data in session storage
+        window.location.reload();
       } else {
         console.error("Blog updating failed:", response.status);
         // Handle registration failure, e.g., display an error message
@@ -97,15 +96,22 @@ const UpdateBlog = () => {
     <div>
       <form className="authForm" onSubmit={handleSubmit}>
         <div>
-          <h1 style={{ color: "#3B71CA" }}>
-            React, Spring Boot, MongoDb Ecommerce
-          </h1>
+          <h2 style={{ color: "#3B71CA" }}>Update Blog</h2>
         </div>
         <div>
-      <h1>{blog.title}</h1>
-      <p>{blog.content}</p>
-      {/* Add any other blog details you want to display */}
-    </div>
+          <div>
+            <h2>
+              <span>Task Title: </span>
+              {blog.title}
+            </h2>
+            <h2 style={{}}>
+              <span>Task Content: </span>
+              {blog.content}
+            </h2>
+            {/* Add any other task details you want to display */}
+          </div>
+          {/* Add any other blog details you want to display */}
+        </div>
         <div>
           <TextField
             style={{ marginBottom: 20 }}
@@ -120,15 +126,15 @@ const UpdateBlog = () => {
           <TextField
             style={{ marginBottom: 20 }}
             className="auth_text_field"
+            multiline
+            rows={6}
             type="text"
             label="New Blog content"
             value={content}
             onChange={(event) => setContent(event.target.value)}
           />
         </div>
-        
-        
-        
+
         <div>
           <Button
             className="authButton"
@@ -137,14 +143,6 @@ const UpdateBlog = () => {
             color="primary"
           >
             Update Blog
-          </Button>
-        </div>
-        <div>
-          <h3>0r</h3>
-        </div>
-        <div>
-          <Button className="authButton" variant="contained" color="primary">
-            <Link to="/sign_in">Login</Link>
           </Button>
         </div>
       </form>

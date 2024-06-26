@@ -18,12 +18,14 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
+import Header from './pages/header';
 
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
+      
         <Route path="/" element={<SignUp />} />
         <Route path="/sign_in" element={<SignIn />} />
         <Route path="/home" element={<Home />} />
@@ -40,6 +42,7 @@ function App() {
   );
   return (
     <>
+    <Header/>
       <RouterProvider router={router} />
     </>
   )

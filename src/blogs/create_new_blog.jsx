@@ -44,6 +44,7 @@ const CreateNewBlog = () => {
         console.log("Blog created successful:", data);
         // Handle successful registration, e.g., redirect to login page
         // Store the user data in session storage
+        window.location.reload();
       } else {
         console.error("Blog creation failed:", response.status);
         // Handle registration failure, e.g., display an error message
@@ -57,46 +58,48 @@ const CreateNewBlog = () => {
     <div>
       <form className="authForm" onSubmit={handleSubmit}>
         <div>
-          <h1 style={{ color: "#3B71CA" }}>
-            React, Spring Boot, MongoDb Ecommerce
-          </h1>
+          <h2 style={{ color: "#3B71CA" }}>Create New Blog</h2>
         </div>
-        <div>
-          <TextField
-            style={{ marginBottom: 20 }}
-            className="auth_text_field"
-            type="text"
-            label="title"  
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-          <TextField
-            label="Blog Content"
-            multiline
-            rows={4}
-            value={content}
-            variant="outlined"
-            style={{ width: "100%", marginBottom: "16px" }}
-            onChange={(event) => setContent(event.target.value)}
-          />
-        </div>
-        <div>
-          <Button
-            className="authButton"
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Create
-          </Button>
-        </div>
-        <div>
-          <h3>0r</h3>
-        </div>
-        <div>
-          <Button className="authButton" variant="contained" color="primary">
-            <Link to="/sign_in">Login</Link>
-          </Button>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "space-between",
+          }}
+        >
+          <div>
+            <TextField
+              label="Blog Content"
+              multiline
+              rows={6}
+              value={content}
+              variant="outlined"
+              style={{ width: "700px", marginBottom: "16px" }}
+              onChange={(event) => setContent(event.target.value)}
+            />
+          </div>
+          <div style={{ marginLeft: "16px" }}>
+            <div>
+              <TextField
+                style={{ marginBottom: 60 }}
+                className="auth_text_field"
+                type="text"
+                label="Blog title"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+              />
+            </div>
+            <div>
+              <Button
+                className="authButton"
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Create
+              </Button>
+            </div>
+          </div>
         </div>
       </form>
     </div>

@@ -64,9 +64,9 @@ const CreateNewUser = () => {
     <div>
       <form className="authForm" onSubmit={handleSubmit}>
         <div>
-          <h1 style={{ color: "#3B71CA" }}>
-            React, Spring Boot, MongoDb Ecommerce
-          </h1>
+          <h2 style={{ color: "#3B71CA" }}>
+            Create New User
+          </h2>
         </div>
         <div>
           <TextField
@@ -125,15 +125,7 @@ const CreateNewUser = () => {
             variant="contained"
             color="primary"
           >
-            CreateNewUser
-          </Button>
-        </div>
-        <div>
-          <h3>0r</h3>
-        </div>
-        <div>
-          <Button className="authButton" variant="contained" color="primary">
-            <Link to="/sign_in">Login</Link>
+            Submit
           </Button>
         </div>
       </form>

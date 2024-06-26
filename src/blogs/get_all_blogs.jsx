@@ -1,12 +1,23 @@
 import { TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  TablePagination,
+} from "@mui/material";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
   const [accessToken, setAccessToken] = useState("");
   const [searchText, setSearchText] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -102,17 +113,17 @@ const BlogList = () => {
       const response = await fetch(
         `http://profiletasks.sandbox.co.ke:8989/blog/delete`,
         {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({
-              id: id,
-            }),
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify({
+            id: id,
+          }),
         }
       );
 
       if (response.ok) {
         console.log("Blog deleted successfully");
-        navigate("/blogs"); // Redirect to the blog list page
+        window.location.reload();
       } else {
         console.error("Error deleting blog:", response.status);
       }
@@ -135,24 +146,53 @@ const BlogList = () => {
 
   return (
     <div>
-      <h1>Blog List</h1>
+      <h2 style={{ color: "#3B71CA" }}>Create New Blog</h2>
+
       <TextField
-      type="text"
-      placeholder="Search blogs..."
-      value={searchText}
-      onChange={handleSearch}
+        type="text"
+        placeholder="Search blogs..."
+        value={searchText}
+        onChange={handleSearch}
+        style={{ width: "450px", marginBottom: "16px" }}
       />
-      <ul>
-        {blogs.map((blog) => (
-          <li key={blog.id}>
-            <h3>{blog.title}</h3>
-            <p>{blog.content}</p>
-            <button onClick={() => handleViewBlog(blog.id)}>View Blog</button>
-            <button onClick={() => handleDeleteBlog(blog.id)}>Delete Blog</button>
-            <button onClick={() => handleUpdateBlog(blog.id)}>Update Blog</button>
-          </li>
-        ))}
-      </ul>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <TableSortLabel>Title</TableSortLabel>
+              </TableCell>
+              <TableCell>Content</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {blogs.map((blog) => (
+              <TableRow key={blog.id}>
+                <TableCell>{blog.title}</TableCell>
+                <TableCell>{blog.content}</TableCell>
+                <TableCell>
+                  <button
+                    style={{ marginRight: "10px" }}
+                    onClick={() => handleViewBlog(blog.id)}
+                  >
+                    View
+                  </button>
+                  <button
+                    style={{ marginRight: "10px" }}
+                    onClick={() => handleDeleteBlog(blog.id)}
+                  >
+                    Delete
+                  </button>
+                  <button onClick={() => handleUpdateBlog(blog.id)}>
+                    Update
+                  </button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

@@ -1,12 +1,23 @@
 import { TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  TablePagination,
+} from "@mui/material";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [accessToken, setAccessToken] = useState("");
   const [searchText, setSearchText] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -102,17 +113,18 @@ const TaskList = () => {
       const response = await fetch(
         `http://profiletasks.sandbox.co.ke:8989/task/delete`,
         {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({
-              id: id,
-            }),
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify({
+            id: id,
+          }),
         }
       );
 
       if (response.ok) {
         console.log("task deleted successfully");
-        navigate("/tasks"); // Redirect to the task list page
+         // Redirect to the task list page
+         window.location.reload();
       } else {
         console.error("Error deleting task:", response.status);
       }
@@ -134,25 +146,68 @@ const TaskList = () => {
   };
 
   return (
-    <div>
-      <h1>task List</h1>
-      <TextField
-      type="text"
-      placeholder="Search tasks..."
-      value={searchText}
-      onChange={handleSearch}
-      />
-      <ul>
-        {tasks.map((atask) => (
-          <li key={atask.id}>
-            <h3>{atask.title}</h3>
-            <p>{atask.task}</p>
-            <button onClick={() => handleViewtask(atask.id)}>View task</button>
-            <button onClick={() => handleDeleteTask(atask.id)}>Delete task</button>
-            <button onClick={() => handleUpdatetask(atask.id)}>Update task</button>
-          </li>
-        ))}
-      </ul>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <div>
+          <h2 style={{ color: "#3B71CA" }}>Task List</h2>
+        </div>
+      <div>
+        <TextField
+          type="text"
+          placeholder="Search tasks..."
+          value={searchText}
+          onChange={handleSearch}
+          style={{ width: "450px", marginBottom: "16px" }}
+
+        />
+      </div>
+      <div style={{ width: "100%" }}>
+        <div>
+          <TableContainer component={Paper} style={{ width: "100%" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <TableSortLabel>Title</TableSortLabel>
+                  </TableCell>
+                  <TableCell>Task</TableCell>
+                  <TableCell style={{ textAlign: "center" }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tasks.map((atask) => (
+                  <TableRow key={atask.id}>
+                    <TableCell>{atask.title}</TableCell>
+                    <TableCell>{atask.content}</TableCell>
+                    <TableCell>
+                      <button
+                        style={{ marginRight: "16px" }}
+                        onClick={() => handleViewtask(atask.id)}
+                      >
+                        View
+                      </button>
+                      <button
+                        style={{ marginRight: "16px" }}
+                        onClick={() => handleDeleteTask(atask.id)}
+                      >
+                        Delete
+                      </button>
+                      <button onClick={() => handleUpdatetask(atask.id)}>
+                        Update
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      </div>
     </div>
   );
 };

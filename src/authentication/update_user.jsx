@@ -69,9 +69,9 @@ const UpdateUser = () => {
     <div>
       <form className="authForm" onSubmit={handleSubmit}>
         <div>
-          <h1 style={{ color: "#3B71CA" }}>
+          <h2 style={{ color: "#3B71CA" }}>
             Update Current User
-          </h1>
+          </h2>
         </div>
         <div>
           <TextField
@@ -131,14 +131,6 @@ const UpdateUser = () => {
             color="primary"
           >
             UpdateUser
-          </Button>
-        </div>
-        <div>
-          <h3>0r</h3>
-        </div>
-        <div>
-          <Button className="authButton" variant="contained" color="primary">
-            <Link to="/sign_in">Login</Link>
           </Button>
         </div>
       </form>

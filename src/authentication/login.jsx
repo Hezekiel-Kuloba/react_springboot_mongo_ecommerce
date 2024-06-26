@@ -47,7 +47,7 @@ const Register = () => {
       <form className="authForm" onSubmit={handleSubmit}>
         <div>
           <h1 style={{ color: "#3B71CA" }}>
-            React, Spring Boot, MongoDb Ecommerce
+            Blog and To-do List App
           </h1>
         </div>
         <div>

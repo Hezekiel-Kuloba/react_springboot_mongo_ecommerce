@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -55,8 +56,38 @@ const UserList = () => {
 
   return (
     <div>
-      <h1>User List</h1>
-      <ul>
+      <div>
+          <h2 style={{ color: "#3B71CA" }}>
+            User List
+          </h2>
+        </div>
+      <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>First Name</TableCell>
+            <TableCell>Last Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Phone Number</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.firstName}</TableCell>
+              <TableCell>{user.lastName}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.phoneNumber}</TableCell>
+              <TableCell>
+                <button onClick={() => handleUpdateUser(user.id)}>Update User</button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+      {/* <ul>
         {users.map((user) => (
           <li key={user.id}>
             <p>{user.firstName}</p>
@@ -67,7 +98,7 @@ const UserList = () => {
           </li>
           
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };

@@ -56,8 +56,8 @@ const Task = () => {
 
   return (
     <div>
-      <h1>{task.title}</h1>
-      <p>{task.content}</p>
+      <h2 ><span >Task Title: </span>{task.title}</h2>
+        <h2 style={{ }}><span>Task Content: </span>{task.content}</h2>
       {/* Add any other task details you want to display */}
     </div>
   );

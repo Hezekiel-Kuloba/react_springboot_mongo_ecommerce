@@ -8,12 +8,16 @@ import UserList from "../authentication/get_user";
 
 const User = () => {
     return (
-        <div>
-            <CreateNewUser/>
-            <UserProfile/>
-            <UpdateUser/>
+        <div style={{display:"flex" }}>
+
+            <div style={{ marginRight: "50px" }}>
             <UserList/>
-            <button onClick={() => handleUpdateUser(blog.id)}>Update User</button>
+            </div>
+
+            <div>
+            <CreateNewUser/>
+            <UpdateUser/>
+            </div>
         </div>
     );
 };

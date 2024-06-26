@@ -56,8 +56,11 @@ const Blog = () => {
 
   return (
     <div>
-      <h1>{blog.title}</h1>
-      <p>{blog.content}</p>
+      <div>
+      <h2 ><span >Blog Title: </span>{blog.title}</h2>
+        <h2 style={{ }}><span>Blog Content: </span>{blog.content}</h2>
+      {/* Add any other task details you want to display */}
+    </div>
       {/* Add any other blog details you want to display */}
     </div>
   );
